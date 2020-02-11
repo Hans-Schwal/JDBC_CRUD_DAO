@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.afpa.cruddao;
+package DAL;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -47,9 +47,50 @@ public class ClientDAO {
         }
     }
 
-    public void Update(Client c) {}
+    public void Update(Client c) {
+        try {
+            String url = "jdbc:mysql://localhost:3306/hotel?serverTimezone=UTC";
+            Connection con = DriverManager.getConnection(url, "root", "");
+            System.out.println("connexion");
 
-    public void Delete(Client c) {}
+            PreparedStatement stm = con.prepareStatement("UPDATE Client SET adresse_client = ?, nom_client = ?, prenom_client = ? WHERE num_client =?");
+            
+            stm.setString(1, c.getAdresse());
+            stm.setString(2, c.getNom());
+            stm.setString(3, c.getPrenom());
+            stm.setInt(4, c.getNumero_client());
+
+            stm.execute();
+            System.out.println("up" + c.getNumero_client());
+            stm.close();
+            con.close();
+       } 
+        catch (Exception e) {
+            System.out.println("Error while updating entity 'client'");
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void Delete(Client c) {
+         try {
+            String url = "jdbc:mysql://localhost:3306/hotel?serverTimezone=UTC";
+            Connection con = DriverManager.getConnection(url, "root", "");
+            System.out.println("connexion");
+
+            PreparedStatement stm = con.prepareStatement("DELETE FROM Client WHERE num_client =?");
+            
+            stm.setInt(1, c.getNumero_client());
+
+            stm.execute();
+            System.out.println("Le client n° " + c.getNumero_client() + "a bien été supprimé.");
+            stm.close();
+            con.close();
+       } 
+        catch (Exception e) {
+            System.out.println("Error while deleting entity 'client'");
+            System.out.println(e.getMessage());
+        }
+    }
 
     public Client Find(int id){
         return null;
@@ -73,7 +114,7 @@ public class ClientDAO {
                 c.setAdresse(result.getString("adresse_client"));
                 c.setNom(result.getString("nom_client"));
                 c.setPrenom(result.getString("prenom_client"));
-                c.setNumero_client(result.getInt("prenom_client"));
+                c.setNumero_client(result.getInt("num_client"));
                 resultat.add(c);
             }
 
@@ -87,7 +128,6 @@ public class ClientDAO {
         }
         
         return resultat;
-
     }
         
 }
