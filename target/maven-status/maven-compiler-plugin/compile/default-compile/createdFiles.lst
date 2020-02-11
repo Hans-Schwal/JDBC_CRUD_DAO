@@ -1,0 +1,5 @@
+com\afpa\cruddao\Form1Controller.class
+com\afpa\cruddao\ClientDAO.class
+module-info.class
+com\afpa\cruddao\App.class
+com\afpa\cruddao\Client.class
