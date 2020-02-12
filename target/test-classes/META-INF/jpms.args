@@ -1,0 +1,4 @@
+--patch-module
+com.afpa.cruddao=_
+--add-reads
+com.afpa.cruddao=ALL-UNNAMED

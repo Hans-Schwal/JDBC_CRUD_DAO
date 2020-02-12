@@ -27,7 +27,7 @@ public class ClientDAO {
         try {
             String url = "jdbc:mysql://localhost:3306/hotel?serverTimezone=UTC";
             Connection con = DriverManager.getConnection(url, "root", "");
-            System.out.println("connexion");
+            //System.out.println("connexion");
 
             PreparedStatement stm = con.prepareStatement("INSERT INTO Client (adresse_client, nom_client, prenom_client, num_client) VALUES (?, ?, ?, ?)");
             
@@ -37,7 +37,7 @@ public class ClientDAO {
             stm.setInt(4, c.getNumero_client());
 
             stm.execute();
-
+            System.out.println("The new client has been added with success");
             stm.close();
             con.close();
        } 
@@ -61,7 +61,7 @@ public class ClientDAO {
             stm.setInt(4, c.getNumero_client());
 
             stm.execute();
-            System.out.println("up" + c.getNumero_client());
+            System.out.println("The update has been saved");
             stm.close();
             con.close();
        } 
@@ -82,7 +82,7 @@ public class ClientDAO {
             stm.setInt(1, c.getNumero_client());
 
             stm.execute();
-            System.out.println("Le client n° " + c.getNumero_client() + "a bien été supprimé.");
+            System.out.println("Client n° " + c.getNumero_client() + "has been erased.");
             stm.close();
             con.close();
        } 
@@ -92,8 +92,25 @@ public class ClientDAO {
         }
     }
 
-    public Client Find(int id){
-        return null;
+    public void Find(Client c){
+         try {
+            String url = "jdbc:mysql://localhost:3306/hotel?serverTimezone=UTC";
+            Connection con = DriverManager.getConnection(url, "root", "");
+            System.out.println("connexion");
+
+            PreparedStatement stm = con.prepareStatement("SELECT * FROM Client WHERE num_client =?");
+            
+            stm.setInt(1, c.getNumero_client());
+
+            stm.execute();
+            System.out.println("Les infos client");
+            stm.close();
+            con.close();
+       } 
+        catch (Exception e) {
+            System.out.println("Error while searching entity 'client'");
+            System.out.println(e.getMessage());
+        }
     }
 
     public List<Client> List() throws SQLException {
